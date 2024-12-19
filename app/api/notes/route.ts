@@ -10,7 +10,13 @@ export async function GET() {
 
     return NextResponse.json(notes);
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { error: "Unknown error occurred" },
+      { status: 500 },
+    );
   }
 }
 
@@ -24,6 +30,12 @@ export async function POST(req: Request) {
 
     return NextResponse.json(newNote);
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { error: "Unknown error occurred" },
+      { status: 500 },
+    );
   }
 }

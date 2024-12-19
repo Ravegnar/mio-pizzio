@@ -23,7 +23,7 @@ export default function NotesPage() {
     try {
       await mutate(
         "/api/notes",
-        (currentData) => [
+        (currentData: any) => [
           ...(currentData || []),
           { name: noteName, id: "temp-id" },
         ],
@@ -34,9 +34,9 @@ export default function NotesPage() {
 
       await mutate(
         "/api/notes",
-        (currentData) =>
+        (currentData: any) =>
           currentData
-            ? currentData.map((note) =>
+            ? currentData.map((note: any) =>
                 note.id === "temp-id" ? newNote : note,
               )
             : [newNote],
@@ -57,9 +57,9 @@ export default function NotesPage() {
     try {
       await mutate(
         "/api/notes",
-        (currentData) =>
+        (currentData: any) =>
           currentData
-            ? currentData.map((note) =>
+            ? currentData.map((note: any) =>
                 note.id === id ? { ...note, name: newName } : note,
               )
             : [],
@@ -72,9 +72,11 @@ export default function NotesPage() {
 
       await mutate(
         "/api/notes",
-        (currentData) =>
+        (currentData: any) =>
           currentData
-            ? currentData.map((note) => (note.id === id ? updatedNote : note))
+            ? currentData.map((note: any) =>
+                note.id === id ? updatedNote : note,
+              )
             : [],
         { revalidate: false },
       );
@@ -93,7 +95,8 @@ export default function NotesPage() {
     try {
       await mutate(
         "/api/notes",
-        (currentData) => currentData?.filter((note) => note.id !== id) || [],
+        (currentData: any) =>
+          currentData?.filter((note: any) => note.id !== id) || [],
         { revalidate: false },
       );
 

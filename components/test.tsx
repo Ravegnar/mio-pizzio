@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function Test() {
   const [loading, setLoading] = useState(false);
-  const [note, setNote] = useState(null);
+  const [note, setNote] = useState<any>(null);
 
   const handleAddNote = async () => {
     setLoading(true);
