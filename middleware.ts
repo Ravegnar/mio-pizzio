@@ -1,8 +1,11 @@
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
+import { getBasicAuth } from "@/utils/getBasicAuth";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const hasBasicAuth = await getBasicAuth();
+
+  return hasBasicAuth ? await updateSession(request) : NextResponse.error();
 }
 
 export const config = {
