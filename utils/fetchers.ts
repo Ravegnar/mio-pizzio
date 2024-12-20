@@ -2,12 +2,12 @@
     const { data, error } = useSWR("/api/notes", getFetcher);
 */
 export const getFetcher = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch data from ${url}`);
-  }
+   const res = await fetch(url);
+   if (!res.ok) {
+      throw new Error(`Failed to fetch data from ${url}`);
+   }
 
-  return res.json();
+   return res.json();
 };
 
 /*
@@ -17,16 +17,16 @@ export const getFetcher = async (url: string) => {
     };
 */
 export const postFetcher = async <T>(url: string, body: T) => {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to post data to ${url}`);
-  }
+   const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+   });
+   if (!res.ok) {
+      throw new Error(`Failed to post data to ${url}`);
+   }
 
-  return res.json();
+   return res.json();
 };
 
 /*
@@ -36,16 +36,16 @@ export const postFetcher = async <T>(url: string, body: T) => {
     };
 */
 export const putFetcher = async <T>(url: string, body: T) => {
-  const res = await fetch(url, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to update data at ${url}`);
-  }
+   const res = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+   });
+   if (!res.ok) {
+      throw new Error(`Failed to update data at ${url}`);
+   }
 
-  return res.json();
+   return res.json();
 };
 
 /*
@@ -55,14 +55,14 @@ const handleDeleteNote = async (noteId: string) => {
     };
 */
 export const deleteFetcher = async (url: string) => {
-  const res = await fetch(url, {
-    method: "DELETE",
-  });
+   const res = await fetch(url, {
+      method: "DELETE",
+   });
 
-  console.log("%c<<< res >>>", "background: #222; color: goldenrod", res);
-  if (!res.ok) {
-    throw new Error(`Failed to delete data from ${url}`);
-  }
+   console.log("%c<<< res >>>", "background: #222; color: goldenrod", res);
+   if (!res.ok) {
+      throw new Error(`Failed to delete data from ${url}`);
+   }
 
-  return res.json();
+   return res.json();
 };
