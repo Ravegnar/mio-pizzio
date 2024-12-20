@@ -1,10 +1,11 @@
 "use client";
 
+import { Note } from "@prisma/client";
 import { useState } from "react";
 
 export default function Test() {
   const [loading, setLoading] = useState(false);
-  const [note, setNote] = useState<any>(null);
+  const [note, setNote] = useState<Note | null>(null);
 
   const handleAddNote = async () => {
     setLoading(true);
@@ -20,7 +21,7 @@ export default function Test() {
         throw new Error("Failed to create note");
       }
 
-      const data = await res.json();
+      const data: Note = await res.json(); //TODO Note TS
       setNote(data);
       console.log("New Note:", data);
     } catch (error) {
@@ -52,7 +53,7 @@ export default function Test() {
           <h3>New Note:</h3>
           <p>ID: {note.id}</p>
           <p>Name: {note.name}</p>
-          <p>Created At: {note.created_at}</p>
+          <p>Created At: {note.created_at.toString()}</p>
         </div>
       )}
     </div>

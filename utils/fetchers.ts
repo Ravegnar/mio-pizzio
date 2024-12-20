@@ -16,7 +16,7 @@ export const getFetcher = async (url: string) => {
       console.log(newNote);
     };
 */
-export const postFetcher = async (url: string, body: any) => {
+export const postFetcher = async <T>(url: string, body: T) => {
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -35,7 +35,7 @@ export const postFetcher = async (url: string, body: any) => {
       console.log(updatedNote);
     };
 */
-export const putFetcher = async (url: string, body: any) => {
+export const putFetcher = async <T>(url: string, body: T) => {
   const res = await fetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

@@ -1,13 +1,14 @@
+import "./globals.css";
 import DeployButton from "@/components/deploy-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
-import HeaderAuth from "@/components/header-auth";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { GeistSans } from "geist/font/sans";
-import { ThemeProvider } from "next-themes";
+import HeaderAuth from "@/components/header-auth";
 import Link from "next/link";
-import "./globals.css";
+import { ReactNode } from "react";
+import { ThemeProvider } from "next-themes";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { getBasicAuth } from "@/utils/getBasicAuth";
+import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -22,9 +23,15 @@ export const metadata = {
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const hasBasicAuth = await getBasicAuth();
+
+  console.log(
+    "%c<<< process.env.VERCEL_URL >>>",
+    "background: #222; color: deepskyblue",
+    process.env.VERCEL_URL,
+  );
 
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>

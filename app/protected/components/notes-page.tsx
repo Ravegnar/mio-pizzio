@@ -1,19 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import useSWR, { mutate } from "swr";
 import {
+  deleteFetcher,
   getFetcher,
   postFetcher,
   putFetcher,
-  deleteFetcher,
 } from "@/utils/fetchers";
+import useSWR, { mutate } from "swr";
+import { Note } from "@prisma/client";
+import { useState } from "react";
+
+const FAKE_ID = -1;
 
 export default function NotesPage() {
-  const { data, error, isLoading } = useSWR("/api/notes", getFetcher);
+  const { data, error, isLoading } = useSWR<Note[]>("/api/notes", getFetcher);
   const [noteName, setNoteName] = useState("");
   const [editingNote, setEditingNote] = useState<{
-    id: string;
+    id: number;
     name: string;
   } | null>(null);
 
@@ -23,9 +26,9 @@ export default function NotesPage() {
     try {
       await mutate(
         "/api/notes",
-        (currentData: any) => [
+        (currentData: Note[] | undefined) => [
           ...(currentData || []),
-          { name: noteName, id: "temp-id" },
+          { name: noteName, id: FAKE_ID, created_at: new Date() },
         ],
         { revalidate: false },
       );
@@ -34,10 +37,10 @@ export default function NotesPage() {
 
       await mutate(
         "/api/notes",
-        (currentData: any) =>
+        (currentData: Note[] | undefined) =>
           currentData
-            ? currentData.map((note: any) =>
-                note.id === "temp-id" ? newNote : note,
+            ? currentData.map((note: Note) =>
+                note.id === FAKE_ID ? newNote : note,
               )
             : [newNote],
         { revalidate: false },
@@ -51,15 +54,15 @@ export default function NotesPage() {
     }
   };
 
-  const handleEditNote = async (id: string, newName: string) => {
+  const handleEditNote = async (id: number, newName: string) => {
     const previousData = data;
 
     try {
       await mutate(
         "/api/notes",
-        (currentData: any) =>
+        (currentData: Note[] | undefined) =>
           currentData
-            ? currentData.map((note: any) =>
+            ? currentData.map((note: Note) =>
                 note.id === id ? { ...note, name: newName } : note,
               )
             : [],
@@ -72,9 +75,9 @@ export default function NotesPage() {
 
       await mutate(
         "/api/notes",
-        (currentData: any) =>
+        (currentData: Note[] | undefined) =>
           currentData
-            ? currentData.map((note: any) =>
+            ? currentData.map((note: Note) =>
                 note.id === id ? updatedNote : note,
               )
             : [],
@@ -89,14 +92,14 @@ export default function NotesPage() {
     }
   };
 
-  const handleDeleteNote = async (id: string) => {
+  const handleDeleteNote = async (id: number) => {
     const previousData = data;
 
     try {
       await mutate(
         "/api/notes",
-        (currentData: any) =>
-          currentData?.filter((note: any) => note.id !== id) || [],
+        (currentData: Note[] | undefined) =>
+          currentData?.filter((note: Note) => note.id !== id) || [],
         { revalidate: false },
       );
 
@@ -119,42 +122,44 @@ export default function NotesPage() {
     <div>
       <h1>Notes</h1>
       <ul>
-        {data.map((note: { id: string; name: string; created_at: string }) => (
-          <li key={note.id}>
-            {editingNote?.id === note.id ? (
-              <div>
-                <input
-                  type="text"
-                  value={editingNote.name}
-                  onChange={(e) =>
-                    setEditingNote({ id: note.id, name: e.target.value })
-                  }
-                />
-                <button
-                  onClick={() => handleEditNote(note.id, editingNote.name)}
-                >
-                  Save
-                </button>
-                <button onClick={() => setEditingNote(null)}>Cancel</button>
-              </div>
-            ) : (
-              <div>
-                <p>{note.name}</p>
-                <small>{new Date(note.created_at).toLocaleString()}</small>
-                <button
-                  onClick={() =>
-                    setEditingNote({ id: note.id, name: note.name })
-                  }
-                >
-                  Edit
-                </button>
-                <button onClick={() => handleDeleteNote(note.id)}>
-                  Delete
-                </button>
-              </div>
-            )}
-          </li>
-        ))}
+        {data?.length
+          ? data.map((note) => (
+              <li key={note.id}>
+                {editingNote?.id === note.id ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={editingNote.name}
+                      onChange={(e) =>
+                        setEditingNote({ id: note.id, name: e.target.value })
+                      }
+                    />
+                    <button
+                      onClick={() => handleEditNote(note.id, editingNote.name)}
+                    >
+                      Save
+                    </button>
+                    <button onClick={() => setEditingNote(null)}>Cancel</button>
+                  </div>
+                ) : (
+                  <div>
+                    <p>{note.name}</p>
+                    <small>{new Date(note.created_at).toLocaleString()}</small>
+                    <button
+                      onClick={() =>
+                        setEditingNote({ id: note.id, name: note.name })
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button onClick={() => handleDeleteNote(note.id)}>
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </li>
+            ))
+          : null}
       </ul>
       <div>
         <input

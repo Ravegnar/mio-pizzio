@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { NextApiResponse } from "next";
 
 // PUT - Aktualizace existující poznámky
 export async function PUT(

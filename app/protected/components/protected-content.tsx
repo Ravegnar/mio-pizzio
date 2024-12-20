@@ -1,11 +1,14 @@
-//"use client";
-
 import FetchDataSteps from "@/components/tutorial/fetch-data-steps";
 import { InfoIcon } from "lucide-react";
-import prisma from "@/lib/prisma";
 import Test from "@/components/test";
+import { User } from "@supabase/auth-js";
+import prisma from "@/lib/prisma";
 
-export async function ProtectedContent(props: any) {
+interface Props {
+  user: User | null;
+}
+
+export async function ProtectedContent(props: Props) {
   const notes = await prisma.note.findMany();
   console.log("%c<<< notes >>>", "background: #222; color: blueviolet", notes);
 
