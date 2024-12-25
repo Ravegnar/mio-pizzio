@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/app/globals.css";
 import DeployButton from "@/components/deploy-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { GeistSans } from "geist/font/sans";
@@ -20,8 +20,6 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
    const hasBasicAuth = await getBasicAuth();
-
-   console.log("%c<<< process.env.VERCEL_URL >>>", "background: #222; color: deepskyblue", process.env.VERCEL_URL);
 
    return (
       <html lang="en" className={GeistSans.className} suppressHydrationWarning>

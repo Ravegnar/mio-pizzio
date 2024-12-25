@@ -1,12 +1,17 @@
-import { FormMessage, Message } from "@/components/form-message";
+import { FormMessage } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { Message } from "@/types/auth-types";
 import { SmtpMessage } from "../smtp-message";
 import { SubmitButton } from "@/components/submit-button";
 import { signUpAction } from "@/app/actions";
 
-export default async function Signup(props: { searchParams: Promise<Message> }) {
+interface Props {
+   searchParams: Promise<Message>;
+}
+
+export default async function Signup(props: Props) {
    const searchParams = await props.searchParams;
    if ("message" in searchParams) {
       return (

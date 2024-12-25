@@ -1,5 +1,5 @@
 import Layout from "@/components/layout";
-import NotesPage from "@/app/protected/components/notes-page";
+import NotesPage from "@/app/(web)/protected/components/notes-page";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 

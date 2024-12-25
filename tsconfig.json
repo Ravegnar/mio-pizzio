@@ -11,6 +11,7 @@
       "module": "esnext",
       "moduleResolution": "node",
       "resolveJsonModule": true,
+      "noUnusedParameters": false,
       "isolatedModules": true,
       "jsx": "preserve",
       "allowSyntheticDefaultImports": true,

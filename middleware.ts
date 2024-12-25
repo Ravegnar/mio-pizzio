@@ -1,11 +1,30 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
 import { getBasicAuth } from "@/utils/getBasicAuth";
 import { updateSession } from "@/utils/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
    const hasBasicAuth = await getBasicAuth();
 
-   return hasBasicAuth ? await updateSession(request) : NextResponse.error();
+   if (hasBasicAuth) {
+      await updateSession(request);
+   } else {
+      return NextResponse.error();
+   }
+
+   const url = request.nextUrl.clone();
+
+   if (url.pathname === "/admin") {
+      const supabase = await createClient();
+      const {
+         data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+         return NextResponse.redirect(new URL("/admin/log-in", request.url));
+      }
+   }
+   return NextResponse.next();
 }
 
 export const config = {
