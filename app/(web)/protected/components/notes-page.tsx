@@ -5,7 +5,7 @@ import useSWR, { mutate } from "swr";
 import { Note } from "@prisma/client";
 import { useState } from "react";
 
-const FAKE_ID = -1;
+const FAKE_ID = -1; // TODO FAKE_ID
 
 export default function NotesPage() {
    const { data, error, isLoading } = useSWR<Note[]>("/api/notes", getFetcher);
