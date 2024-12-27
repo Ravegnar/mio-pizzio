@@ -12,6 +12,7 @@ import {
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export function NavUser({
    user,
@@ -64,6 +65,9 @@ export function NavUser({
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
+                     <DropdownMenuItem>
+                        <ThemeSwitcher />
+                     </DropdownMenuItem>
                      <DropdownMenuItem>
                         <Sparkles />
                         Upgrade to Pro

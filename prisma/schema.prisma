@@ -9,7 +9,42 @@ datasource db {
 }
 
 model Note {
-  id        Int      @id @default(autoincrement())
-  name      String
-  created_at DateTime @default(now())
+  id           Int         @id @default(autoincrement())
+  name         String
+  created_at   DateTime    @default(now())
+}
+
+model  Ingredient {
+  createdAt    DateTime    @default(now())
+  description  String?
+  id           Int         @id @default(autoincrement())
+  isActive     Boolean     @default(false)
+  isGlutenFree Boolean     @default(false)
+  isVegan      Boolean     @default(false)
+  name         String      @unique
+  pizzas       PizzaIngredient[]
+  price        Float
+  updatedAt    DateTime    @updatedAt
+}
+
+model Pizza {
+  createdAt    DateTime    @default(now())
+  description  String?
+  id           Int         @id @default(autoincrement())
+  ingredients  PizzaIngredient[]
+  isActive     Boolean     @default(false)
+  isGlutenFree Boolean     @default(false)
+  isVegan      Boolean     @default(false)
+  name         String
+  price        Float
+  size         Float
+  updatedAt    DateTime    @updatedAt
+}
+
+model PizzaIngredient {
+  id           Int        @id @default(autoincrement())
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId Int
+  pizza        Pizza      @relation(fields: [pizzaId], references: [id])
+  pizzaId      Int
 }

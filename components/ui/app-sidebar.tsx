@@ -22,7 +22,7 @@ import { TeamSwitcher } from "./team-switcher";
 // This is sample data.
 const data = {
    user: {
-      name: "shadcn",
+      name: "Lukas",
       email: "m@example.com",
       avatar: "/favicon.ico",
    },
@@ -51,12 +51,12 @@ const data = {
          isActive: true,
          items: [
             {
-               title: "History",
-               url: "#",
+               title: "Pizzas",
+               url: "/admin/pizzas",
             },
             {
-               title: "Starred",
-               url: "#",
+               title: "Ingredients",
+               url: "/admin/ingredients",
             },
             {
                title: "Settings",
@@ -151,7 +151,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
    return (
-      <Sidebar collapsible="icon" {...props}>
+      <Sidebar collapsible="icon" variant="floating" {...props}>
          <SidebarHeader>
             <TeamSwitcher teams={data.teams} />
          </SidebarHeader>

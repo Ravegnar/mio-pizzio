@@ -22,7 +22,11 @@
          }
       ],
       "paths": {
-         "@/*": ["./*"]
+         "@/*": ["./*"],
+         "@hooks/*": ["./utils/hooks/*"],
+         "@validations/*": ["./utils/validations/*"],
+         "@zod/*": ["./lib/zod/*"],
+         "@ui/*": ["./components/ui/*"]
       }
    },
    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
