@@ -24,8 +24,6 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
    const isFiltered = table.getState().columnFilters.length > 0;
 
-   console.log("%c<<< table >>>", "background: #222; color: red", table);
-
    // Memoize computation of searchableColumns and filterableColumns
    const { searchableColumns, filterableColumns } = useMemo(() => {
       return {

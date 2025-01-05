@@ -1,20 +1,27 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getBasicAuth } from "@/utils/getBasicAuth";
-import { updateSession } from "@/utils/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
    const hasBasicAuth = await getBasicAuth();
 
    if (hasBasicAuth) {
-      await updateSession(request);
+      //await updateSession(request); // TODO
    } else {
       return NextResponse.error();
    }
 
    const url = request.nextUrl.clone();
 
-   if (url.pathname === "/admin") {
+   if (
+      url.pathname === "/admin/log-in" ||
+      url.pathname === "/admin/forgot-password" ||
+      url.pathname === "/admin/sign-up"
+   ) {
+      return NextResponse.next();
+   }
+
+   if (url.pathname.startsWith("/admin")) {
       const supabase = await createClient();
       const {
          data: { user },

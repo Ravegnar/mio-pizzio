@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
+import { ChevronsUpDown, Lock, LogOut } from "lucide-react";
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -12,7 +12,9 @@ import {
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { signOutAction } from "@/app/actions";
 
 export function NavUser({
    user,
@@ -61,35 +63,20 @@ export function NavUser({
                            <span className="truncate font-semibold">{user.name}</span>
                            <span className="truncate text-xs">{user.email}</span>
                         </div>
+                        <ThemeSwitcher />
                      </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                      <DropdownMenuItem>
-                        <ThemeSwitcher />
-                     </DropdownMenuItem>
-                     <DropdownMenuItem>
-                        <Sparkles />
-                        Upgrade to Pro
-                     </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                     <DropdownMenuItem>
-                        <BadgeCheck />
-                        Account
-                     </DropdownMenuItem>
-                     <DropdownMenuItem>
-                        <CreditCard />
-                        Billing
-                     </DropdownMenuItem>
-                     <DropdownMenuItem>
-                        <Bell />
-                        Notifications
+                        <Link className="flex gap-2 cursor-default" href="/admin/reset-password">
+                           <Lock />
+                           Reset password
+                        </Link>
                      </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={signOutAction}>
                      <LogOut />
                      Log out
                   </DropdownMenuItem>

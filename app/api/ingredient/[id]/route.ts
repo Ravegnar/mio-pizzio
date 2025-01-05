@@ -18,9 +18,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
          data: validatedData,
       });
 
-      console.log("%c<<< updatedIngredient >>>", "background: #222; color: blueviolet", updatedIngredient);
-
-      return NextResponse.json("updatedIngredient");
+      return NextResponse.json(updatedIngredient);
    } catch (error) {
       console.error("Error in PUT handler:", error);
       return NextResponse.json({ error: String(error) }, { status: 500 });

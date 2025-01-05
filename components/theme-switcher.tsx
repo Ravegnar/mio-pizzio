@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 
+const ICON_SIZE = 16;
+
 const ThemeSwitcher = () => {
    const [mounted, setMounted] = useState(false);
    const { theme, setTheme } = useTheme();
@@ -24,8 +26,6 @@ const ThemeSwitcher = () => {
    if (!mounted) {
       return null;
    }
-
-   const ICON_SIZE = 16;
 
    return (
       <DropdownMenu>

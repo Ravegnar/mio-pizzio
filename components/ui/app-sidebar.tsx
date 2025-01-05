@@ -1,21 +1,9 @@
 "use client";
 
-import * as React from "react";
-import {
-   AudioWaveform,
-   BookOpen,
-   Bot,
-   Command,
-   Frame,
-   GalleryVerticalEnd,
-   Map,
-   PieChart,
-   Settings2,
-   SquareTerminal,
-} from "lucide-react";
+import { AudioWaveform, Command, CookingPot, LayoutDashboard, Pizza, Store } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import { ComponentProps } from "react";
 import { NavMain } from "./nav-main";
-import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 
@@ -28,8 +16,8 @@ const data = {
    },
    teams: [
       {
-         name: "Acme Inc",
-         logo: GalleryVerticalEnd,
+         name: "Pizzeria name",
+         logo: Store,
          plan: "Enterprise",
       },
       {
@@ -45,6 +33,24 @@ const data = {
    ],
    navMain: [
       {
+         title: "Dashboard",
+         icon: LayoutDashboard,
+         isActive: true,
+         url: "/admin",
+      },
+      {
+         title: "Pizzas",
+         icon: Pizza,
+         isActive: true,
+         url: "/admin/pizzas",
+      },
+      {
+         title: "Ingredients",
+         icon: CookingPot,
+         isActive: true,
+         url: "/admin/ingredients",
+      },
+      /*{
          title: "Playground",
          url: "#",
          icon: SquareTerminal,
@@ -63,74 +69,9 @@ const data = {
                url: "#",
             },
          ],
-      },
-      {
-         title: "Models",
-         url: "#",
-         icon: Bot,
-         items: [
-            {
-               title: "Genesis",
-               url: "#",
-            },
-            {
-               title: "Explorer",
-               url: "#",
-            },
-            {
-               title: "Quantum",
-               url: "#",
-            },
-         ],
-      },
-      {
-         title: "Documentation",
-         url: "#",
-         icon: BookOpen,
-         items: [
-            {
-               title: "Introduction",
-               url: "#",
-            },
-            {
-               title: "Get Started",
-               url: "#",
-            },
-            {
-               title: "Tutorials",
-               url: "#",
-            },
-            {
-               title: "Changelog",
-               url: "#",
-            },
-         ],
-      },
-      {
-         title: "Settings",
-         url: "#",
-         icon: Settings2,
-         items: [
-            {
-               title: "General",
-               url: "#",
-            },
-            {
-               title: "Team",
-               url: "#",
-            },
-            {
-               title: "Billing",
-               url: "#",
-            },
-            {
-               title: "Limits",
-               url: "#",
-            },
-         ],
-      },
+      },*/
    ],
-   projects: [
+   /*projects: [
       {
          name: "Design Engineering",
          url: "#",
@@ -146,10 +87,10 @@ const data = {
          url: "#",
          icon: Map,
       },
-   ],
+   ],*/
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
    return (
       <Sidebar collapsible="icon" variant="floating" {...props}>
          <SidebarHeader>
@@ -157,7 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
          </SidebarHeader>
          <SidebarContent>
             <NavMain items={data.navMain} />
-            <NavProjects projects={data.projects} />
+            {/*<NavProjects projects={data.projects} />*/}
          </SidebarContent>
          <SidebarFooter>
             <NavUser user={data.user} />

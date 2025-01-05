@@ -59,7 +59,6 @@ export const deleteFetcher = async (url: string) => {
       method: "DELETE",
    });
 
-   console.log("%c<<< res >>>", "background: #222; color: goldenrod", res);
    if (!res.ok) {
       throw new Error(`Failed to delete data from ${url}`);
    }

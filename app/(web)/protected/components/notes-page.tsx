@@ -85,11 +85,7 @@ export default function NotesPage() {
             { revalidate: false },
          );
 
-         console.log("%c<<< id >>>", "background: #222; color: deepskyblue", id);
-
-         const ss = await deleteFetcher(`/api/notes/${id}`);
-
-         console.log("%c<<< ss >>>", "background: #222; color: goldenrod", ss);
+         await deleteFetcher(`/api/notes/${id}`);
       } catch (error) {
          console.error("Error deleting note:", error);
 

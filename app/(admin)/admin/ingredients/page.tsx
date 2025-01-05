@@ -14,8 +14,6 @@ export default function Page() {
 
    const { data: ingredients, isLoading } = useSWR("/api/ingredient");
 
-   console.log("%c<<< ingredients >>>", "background: #222; color: deepskyblue", ingredients);
-
    return (
       <div className="sm:container sm:mx-auto py-10">
          <DataTable

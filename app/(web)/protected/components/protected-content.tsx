@@ -9,8 +9,7 @@ interface Props {
 }
 
 export async function ProtectedContent(props: Props) {
-   const notes = await prisma.note.findMany();
-   console.log("%c<<< notes >>>", "background: #222; color: blueviolet", notes);
+   await prisma.note.findMany();
 
    return (
       <div className="flex-1 w-full flex flex-col gap-12">
