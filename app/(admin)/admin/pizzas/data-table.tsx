@@ -16,9 +16,9 @@ import { ReactNode, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/data-table/pagination";
 import { DataTableToolbar } from "@/components/data-table/toolbar";
-import { Ingredient } from "@prisma/client";
 import { Skeleton } from "@ui/skeleton";
 import type { Table as TableType } from "@tanstack/react-table";
+import { TransformedPizzaFragment } from "@/types/pizza-types";
 import { filterFields } from "./filter-fields";
 
 const SKELETON_ROWS_COUNT = 10;
@@ -26,8 +26,8 @@ const SKELETON_ROWS_COUNT = 10;
 interface DataTableProps {
    actions?: ReactNode;
    className?: string;
-   columns: ColumnDef<Ingredient>[];
-   data: Ingredient[];
+   columns: ColumnDef<TransformedPizzaFragment>[];
+   data: TransformedPizzaFragment[];
    isLoading: boolean;
 }
 
@@ -36,7 +36,7 @@ export function DataTable({ actions, columns, data, isLoading }: DataTableProps)
    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
    const [sorting, setSorting] = useState<SortingState>([]);
 
-   const table: TableType<Ingredient> = useReactTable<Ingredient>({
+   const table: TableType<TransformedPizzaFragment> = useReactTable<TransformedPizzaFragment>({
       data,
       columns,
       getCoreRowModel: getCoreRowModel(),

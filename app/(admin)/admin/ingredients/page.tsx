@@ -3,6 +3,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@ui/dialog";
 import { Button } from "@ui/button";
 import { DataTable } from "./data-table";
+import { Ingredient } from "@prisma/client";
 import { IngredientForm } from "@/components/form/ingredient-form";
 import { SheetDescription } from "@ui/sheet";
 import { columns } from "./columns";
@@ -12,7 +13,7 @@ import { useState } from "react";
 export default function Page() {
    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-   const { data: ingredients, isLoading } = useSWR("/api/ingredient");
+   const { data: ingredients, isLoading } = useSWR<Ingredient[]>("/api/ingredient");
 
    return (
       <div className="sm:container sm:mx-auto py-10">

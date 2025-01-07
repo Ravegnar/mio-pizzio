@@ -48,3 +48,9 @@ model PizzaIngredient {
   pizza        Pizza      @relation(fields: [pizzaId], references: [id])
   pizzaId      Int
 }
+
+enum Color {
+  Red
+  Green
+  Blue
+}
