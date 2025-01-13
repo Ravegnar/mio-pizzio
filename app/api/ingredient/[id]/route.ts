@@ -1,3 +1,4 @@
+import { FlashMessageType, flashMessages } from "@/constants/message-codes";
 import { NextResponse } from "next/server";
 import { ingredientSchema } from "@zod/ingredient";
 import prisma from "@/lib/prisma";
@@ -6,7 +7,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
    try {
       const id = parseInt((await params).id, 10);
 
-      if (!id) {
+      if (isNaN(id)) {
          return NextResponse.json({ error: "Missing ID" }, { status: 400 });
       }
 
@@ -29,7 +30,24 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
    try {
       const id = parseInt((await params).id, 10);
 
-      if (id === null || id === undefined) {
+      const pizzas = await prisma.pizzaIngredient.findMany({
+         where: { ingredientId: id },
+         include: {
+            pizza: true,
+         },
+      });
+
+      const pizzaNames = pizzas.map((pizzaIngredient) => pizzaIngredient.pizza.name);
+
+      if (pizzas.length) {
+         return NextResponse.json({
+            message: `${flashMessages[FlashMessageType.PIZZA_RELATION]} ${pizzaNames.slice(0, -1).join(", ")} and ${pizzaNames[pizzaNames.length - 1]}`,
+            id,
+            code: FlashMessageType.PIZZA_RELATION,
+         });
+      }
+
+      if (isNaN(id)) {
          console.log("No ID provided in params");
          return NextResponse.json({ error: "Missing ID" }, { status: 400 });
       }

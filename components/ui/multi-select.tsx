@@ -78,12 +78,8 @@ const MultiSelector = ({
    const [isValueSelected, setIsValueSelected] = useState(false);
    const [selectedValue, setSelectedValue] = useState("");
 
-   console.log("%c<<< values >>>", "background: #222; color: goldenrod", value);
-
    const onValueChangeHandler = useCallback(
       (val: string | number) => {
-         console.log("%c<<< value >>>", "background: #222; color: goldenrod", value);
-
          if (value.includes(val)) {
             onValueChange(value.filter((item) => item !== val));
          } else {
@@ -213,9 +209,24 @@ const MultiSelector = ({
    );
 };
 
-const MultiSelectorTrigger = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-   ({ className, children, ...props }, ref) => {
+interface Option {
+   id: string | number;
+   name: string;
+   [key: string]: unknown;
+}
+
+interface MultiSelectorTriggerProps extends HTMLAttributes<HTMLDivElement> {
+   options: Option[];
+}
+
+const MultiSelectorTrigger = forwardRef<HTMLDivElement, MultiSelectorTriggerProps>(
+   ({ className, children, options, ...props }, ref) => {
       const { value, onValueChange, activeIndex } = useMultiSelect();
+
+      const optionValues: Record<Option["id"], Option["name"]> = options.reduce(
+         (acc, v) => ({ ...acc, [v.id]: v.name }),
+         {},
+      );
 
       const mousePreventDefault: MouseEventHandler<HTMLButtonElement> = useCallback((e) => {
          e.preventDefault();
@@ -243,7 +254,7 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEl
                   )}
                   variant={"secondary"}
                >
-                  <span className="text-xs">{item}</span>
+                  <span className="text-xs">{optionValues[item]}</span>
                   <button
                      aria-label={`Remove ${item} option`}
                      aria-roledescription="button to remove option"
@@ -332,7 +343,7 @@ MultiSelectorList.displayName = "MultiSelectorList";
 
 const MultiSelectorItem = forwardRef<
    ElementRef<typeof CommandPrimitive.Item>,
-   { value: string | number } & ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
+   { value: string | number } & Omit<ComponentPropsWithoutRef<typeof CommandPrimitive.Item>, "value">
 >(({ className, value, children, ...props }, ref) => {
    const { value: Options, onValueChange, setInputValue } = useMultiSelect();
 
@@ -341,9 +352,8 @@ const MultiSelectorItem = forwardRef<
       e.stopPropagation();
    }, []);
 
-   console.log("%c<<< value ssssss>>>", "background: #222; color: goldenrod", value);
-
    const isIncluded = Options.includes(value);
+
    return (
       <CommandItem
          ref={ref}

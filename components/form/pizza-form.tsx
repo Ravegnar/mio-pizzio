@@ -119,17 +119,17 @@ export function PizzaForm(props: Props) {
                name="ingredients"
                render={({ field }) => (
                   <FormItem>
-                     <FormLabel>Select your framework</FormLabel>
+                     <FormLabel>Select ingredients</FormLabel>
                      <FormControl>
                         <MultiSelector values={field.value} onValuesChange={field.onChange} loop className="max-w-xs">
-                           <MultiSelectorTrigger>
-                              <MultiSelectorInput placeholder="Select languages" />
+                           <MultiSelectorTrigger options={ingredients ?? []}>
+                              <MultiSelectorInput placeholder="Select ingredients" />
                            </MultiSelectorTrigger>
                            <MultiSelectorContent>
                               <MultiSelectorList>
                                  {ingredients
                                     ? ingredients.map((v) => (
-                                         <MultiSelectorItem key={v.id} value={v.id.toString()}>
+                                         <MultiSelectorItem key={v.id} value={v.id}>
                                             {v.name}
                                          </MultiSelectorItem>
                                       ))

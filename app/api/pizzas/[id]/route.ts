@@ -6,7 +6,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
    try {
       const id = parseInt((await params).id, 10);
 
-      if (!id) {
+      if (isNaN(id)) {
          return NextResponse.json({ error: "Missing ID" }, { status: 400 });
       }
 
@@ -23,6 +23,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
             price,
             size,
             ingredients: {
+               deleteMany: {},
                create:
                   ingredients?.map((id) => ({
                      ingredient: {
@@ -44,14 +45,22 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
    try {
       const id = parseInt((await params).id, 10);
 
-      if (id === null || id === undefined) {
+      if (isNaN(id)) {
          console.log("No ID provided in params");
          return NextResponse.json({ error: "Missing ID" }, { status: 400 });
       }
 
-      await prisma.pizza.delete({
-         where: { id },
+      await prisma.pizzaIngredient.deleteMany({
+         where: { pizzaId: id },
       });
+
+      await prisma.pizza
+         .delete({
+            where: { id },
+         })
+         .catch((err) => {
+            console.error("%c<<< Error deleting pizza >>>", "background: #222; color: red", err);
+         });
 
       return NextResponse.json({ message: "Pizza deleted successfully" });
    } catch (error) {

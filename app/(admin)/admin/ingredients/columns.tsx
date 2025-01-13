@@ -13,23 +13,31 @@ import {
 import { Button } from "@ui/button";
 import { Checkbox } from "@ui/checkbox";
 import { DataTableColumnHeader } from "@/components/data-table/column-header";
+import { FlashMessageType } from "@/constants/message-codes";
 import { Ingredient } from "@prisma/client";
 import { IngredientForm } from "@/components/form/ingredient-form";
 import { MoreHorizontal } from "lucide-react";
 import { SheetDescription } from "@ui/sheet";
 import { deleteFetcher } from "@/utils/fetchers";
 import { mutate } from "swr";
+import { toast } from "@hooks/use-toast";
 import { useState } from "react";
 
 const handleDeleteIngredient = async (id: number) => {
    try {
-      await deleteFetcher(`/api/ingredient/${id}`);
+      const res = await deleteFetcher(`/api/ingredient/${id}`);
+
+      if (res.code === FlashMessageType.PIZZA_RELATION) {
+         return toast({ variant: "destructive", description: res.message });
+      }
 
       await mutate(
          "/api/ingredient",
          (currentData: Ingredient[] | undefined) => currentData?.filter((v) => v.id !== id) || [],
          { revalidate: false },
       );
+
+      toast({ title: "Fu", description: "Kakakakakakaaa" });
    } catch (error) {
       console.error("Error deleting note:", error);
    }
