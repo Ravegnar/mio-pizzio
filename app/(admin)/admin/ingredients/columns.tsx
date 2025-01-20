@@ -39,7 +39,7 @@ const handleDeleteIngredient = async (id: number) => {
 
       toast({ title: "Fu", description: "Kakakakakakaaa" });
    } catch (error) {
-      console.error("Error deleting note:", error);
+      console.error("Error deleting ingredient:", error);
    }
 };
 

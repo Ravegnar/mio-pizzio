@@ -1,4 +1,4 @@
-export default function Page() {
+export default async function Page() {
    /*
    const supabase = await createClient();
    const user = await supabase.auth.getUser();

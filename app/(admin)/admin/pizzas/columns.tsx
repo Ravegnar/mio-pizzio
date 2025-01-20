@@ -33,7 +33,7 @@ const handleDeletePizza = async (id: number) => {
          },
       );
    } catch (error) {
-      console.error("Error deleting note:", error);
+      console.error("Error deleting pizza:", error);
    }
 };
 
