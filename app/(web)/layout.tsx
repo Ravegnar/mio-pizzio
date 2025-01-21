@@ -5,7 +5,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Toaster } from "@ui/toaster";
 import { TooltipProvider } from "@ui/tooltip";
 import { WebNavigationMenu } from "@/components/web-navigation-menu";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { getBasicAuth } from "@/utils/getBasicAuth";
 
 const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
