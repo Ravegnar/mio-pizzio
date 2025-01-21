@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       const data = await req.json();
       const validatedData = pizzaSchema.parse(data);
 
-      const { name, description, price, size, ingredients } = validatedData;
+      const { name, description, price, size, ingredients, isVegan, isActive, isGlutenFree } = validatedData;
 
       const newPizza = await prisma.pizza.create({
          data: {
@@ -38,6 +38,9 @@ export async function POST(req: Request) {
             description,
             price,
             size,
+            isVegan,
+            isActive,
+            isGlutenFree,
             ingredients: {
                create:
                   ingredients?.map((id) => ({

@@ -10,7 +10,7 @@ import { columns } from "./columns";
 import useSWR from "swr";
 import { useState } from "react";
 
-export default function Page() {
+export default function PizzasPage() {
    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
    const { data: pizzas = [], isLoading } = useSWR<TransformedPizzaFragment[]>("/api/pizzas");

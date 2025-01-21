@@ -7,13 +7,12 @@ interface Props {
    user: User | null;
 }
 
-export default async function AuthButton(props: Props) {
-   console.log("%c<<< props.user >>>", "background: #222; color: deepskyblue", props.user);
+export default function AuthButton(props: Props) {
    return props.user ? (
       <div className="flex items-center gap-4 first-letter:uppercase">
-         {props.user.email}
+         <span className="max-md:hidden">{props.user.email?.split("@")[0]}</span>
          <form action={signOutAction}>
-            <Button type="submit" variant="outline">
+            <Button size="sm" type="submit" variant="outline">
                Sign out
             </Button>
          </form>

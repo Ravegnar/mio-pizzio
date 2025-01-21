@@ -13,7 +13,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       const data = await req.json();
       const validatedData = pizzaSchema.parse(data);
 
-      const { name, description, price, size, ingredients } = validatedData;
+      const { name, description, price, size, ingredients, isVegan, isActive, isGlutenFree } = validatedData;
 
       const updatedPizza = await prisma.pizza.update({
          where: { id },
@@ -22,6 +22,9 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
             description,
             price,
             size,
+            isVegan,
+            isActive,
+            isGlutenFree,
             ingredients: {
                deleteMany: {},
                create:
