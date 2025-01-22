@@ -21,9 +21,9 @@ interface Props {
 
 export default async function RootLayout(props: Props) {
    const { children } = props;
-   const user = await getMe(); // TODO
+   const me = await getMe();
 
-   console.log("%c<<< user >>>", "background: #222; color: goldenrod", user);
+   console.log("%c<<< me >>>", "background: #222; color: goldenrod", me);
 
    const hasBasicAuth = await getBasicAuth();
 
@@ -31,7 +31,7 @@ export default async function RootLayout(props: Props) {
       <SWRProvider>
          <main className="min-h-screen flex flex-col items-center">
             <SidebarProvider>
-               <AppSidebar />
+               <AppSidebar me={me} />
                <SidebarInset>
                   <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
                      <div className="flex items-center gap-2 px-4">

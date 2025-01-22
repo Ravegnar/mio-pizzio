@@ -3,6 +3,7 @@
 import { AudioWaveform, Command, CookingPot, LayoutDashboard, Pizza, Store } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 import { ComponentProps } from "react";
+import { Me } from "@/types/user-types";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
@@ -90,7 +91,11 @@ const data = {
    ],*/
 };
 
-export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
+interface Props extends ComponentProps<typeof Sidebar> {
+   me: Me;
+}
+
+export function AppSidebar({ me, ...props }: Props) {
    return (
       <Sidebar collapsible="icon" variant="floating" {...props}>
          <SidebarHeader>
@@ -101,7 +106,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
             {/*<NavProjects projects={data.projects} />*/}
          </SidebarContent>
          <SidebarFooter>
-            <NavUser user={data.user} />
+            <NavUser me={me} />
          </SidebarFooter>
          <SidebarRail />
       </Sidebar>
